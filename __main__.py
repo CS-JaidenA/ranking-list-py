@@ -6,30 +6,10 @@
 
 with open("ranking.txt", 'r') as file:
 	ranking: list[str] = file.read().split('\n')
-	
+
 	# above line adds an empty item to end of list which needs removing
-	
+
 	ranking.pop()
-
-# utility functions
-
-def save_ranking():
-	with open("ranking.txt", 'w') as file:
-		content: str = ''
-
-		for item in ranking:
-			content += item + '\n'
-		
-		file.write(content)
-
-def print_ranking():
-	print("RANK LIST")
-
-	if len(ranking) == 0:
-		return print("No Items in the Rank List")
-
-	for i in range(len(ranking)):
-		print(f"{i + 1}: {ranking[i]}")
 
 # menu loop
 
@@ -52,21 +32,19 @@ while True:
 
 	match option:
 		case '1':
-			print_ranking()
+			pass # results printed at the end
 		case '2':
 			print("ADD ITEM TO END")
 			item: str = input("Enter item: ")
 			ranking.append(item)
 
 			print()
-			print_ranking()
 		case '3':
 			print("REMOVE LAST ITEM")
 			print(f"{ranking[-1]} removed from end of list.")
 			ranking.pop()
 
 			print()
-			print_ranking()
 		case '4':
 			print("INSERT ITEM")
 			position: int = int(input("Insert Position: "))
@@ -75,7 +53,6 @@ while True:
 			ranking.insert(position - 1, item)
 
 			print()
-			print_ranking()
 		case '5':
 			print("REMOVE AT POSITION")
 			index: int = int(input("Position to remove: ")) - 1
@@ -84,7 +61,6 @@ while True:
 			ranking.pop(index)
 
 			print()
-			print_ranking()
 		case '6':
 			print("MOVE TO POSITION")
 			index_from: int = int(input("Move Item from: ")) - 1
@@ -95,7 +71,6 @@ while True:
 			ranking.insert(index_to, item)
 
 			print()
-			print_ranking()
 		case '7':
 			print("EDIT ITEM")
 			position: int = int(input("Enter position: "))
@@ -104,10 +79,27 @@ while True:
 			ranking[position - 1] = replacement
 
 			print()
-			print_ranking()
 		case '8':
 			break
 		case _:
 			print("Invalid option. Try again...")
-	
-	save_ranking()
+
+	# print results
+
+	print("RANK LIST")
+
+	if len(ranking) > 0:
+		for i in range(len(ranking)):
+			print(f"{i + 1}: {ranking[i]}")
+	else:
+		print("No Items in the Rank List")
+
+	# save results
+
+	with open("ranking.txt", 'w') as file:
+		content: str = ''
+
+		for item in ranking:
+			content += item + '\n'
+
+		file.write(content)
